@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,7 +20,7 @@ public class ProdutoController {
     private ProdutoService service;
 
     @GetMapping
-    public String chamaFormulario(Produto produto, Model model) {
+    public String chamaFormularioDeCadastro(Produto produto, Model model) {
         return "formulario";
     }
 
@@ -61,6 +62,39 @@ public class ProdutoController {
         service.save(produto);
 
         return "redirect:formulario/lista";
+    }
+
+    @GetMapping("/deletar/{id}")
+    public String deletarProduto(@PathVariable("id") Long id, Model model) {
+        service.deleteById(id);
+
+        List<Produto> produtos = service.findAll();
+
+        model.addAttribute("produtos", produtos);
+
+        return "lista_produtos";
+    }
+
+    @GetMapping("/atualizar")
+    public String chamaFormularioDeAtualizacao(Produto produto, Model model) {
+        return "formulario_atualizar";
+    }
+
+    @PostMapping("/atualizar")
+    public String atualizarProduto(Produto produtoAtualizado, Model model) {
+        Produto produto = service.findById(produtoAtualizado.getId());
+
+        produto.setNome(produtoAtualizado.getNome());
+        produto.setDescricao(produtoAtualizado.getDescricao());
+        produto.setDataLancamento(produtoAtualizado.getDataLancamento());
+        produto.setValor(produtoAtualizado.getValor());
+
+        service.save(produto);
+
+        List<Produto> produtos = service.findAll();
+
+        model.addAttribute("produtos", produtos);
+        return "lista_produtos";
     }
 
 }

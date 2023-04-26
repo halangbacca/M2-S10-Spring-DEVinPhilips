@@ -22,6 +22,10 @@ public class ProdutoService {
         return repository.findAll().stream().map(produto -> new Produto(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getDataLancamento(), produto.getValor())).collect(Collectors.toList());
     }
 
+    public void deleteById(Long id){
+        repository.deleteById(id);
+    }
+
     public void save(Produto produto) {
         repository.save(produto);
     }
