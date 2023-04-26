@@ -9,5 +9,12 @@
 <div th:text="${descricao}"></div>
 <div th:text="${dataLancamento}"></div>
 <div th:text="${valor}"></div>
+
+<div th:object="${produto}">
+    <div th:text="${produto.nome}"></div>
+    <div th:text="${produto.descricao}"></div>
+    <div th:text="${produto.dataLancamento}"></div>
+    <div th:text="${produto.valor}"></div>
+</div>
 </body>
 </html>
