@@ -10,7 +10,8 @@
 <div th:text="${dataLancamento}"></div>
 <div th:text="${valor}"></div>
 
-<div th:object="${produto}">
+<div th:each="produto: ${produtos}">
+    <div th:text="${produto.id}"></div>
     <div th:text="${produto.nome}"></div>
     <div th:text="${produto.descricao}"></div>
     <div th:text="${produto.dataLancamento}"></div>
